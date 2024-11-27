@@ -1,0 +1,81 @@
+# Build artifacts
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+*.VC.db
+.vscode/
+
+# Logs
+*.log
+Logs/
+
+# Environment variables
+.env
+.env.*
+
+# DotNet specific
+.project/
+.project.lock.json
+artifacts/
+*.rsuser
+*.ide
+*.ncrunchsolution
+*.localhistory
+*.cache
+*.pdb
+*.pidb
+
+# Rider/JetBrains specific
+.idea/
+*.sln.iml
+
+# Visual Studio specific
+.vs/
+.vscode/
+*.tlog
+*.lastbuildstate
+*.iobj
+*.suo
+*.ilk
+*.idb
+_ReSharper*/ 
+*.orig
+
+# Dependency directories
+node_modules/
+packages/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# Temp files
+*.tmp
+*.temp
+
+# Azure specific
+.publishsettings
+*.swp
+
+# Debug and Release folders
+Debug/
+Release/
+x64/
+x86/
+[Aa][Pp][Ii]/**/Release/
+[Aa][Pp][Ii]/**/Debug/
+[Ww][Oo][Rr][Kk][Ee][Rr]/**/Release/
+[Ww][Oo][Rr][Kk][Ee][Rr]/**/Debug/
+ 
+# Other
+*.DS_Store
+Thumbs.db
