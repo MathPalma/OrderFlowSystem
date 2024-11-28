@@ -1,4 +1,5 @@
 ﻿using API.Application.Interfaces;
+using API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -11,6 +12,12 @@ namespace API.Controllers
         public OrderController(IOrderService orderService) 
         {
             _orderService = orderService;
+        }
+
+        [HttpPost]
+        public IActionResult CreateOrder([FromBody] OrderViewModel orderViewModel)
+        {
+            return Ok();
         }
     }
 }
