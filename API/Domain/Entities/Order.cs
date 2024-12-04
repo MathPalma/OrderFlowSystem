@@ -10,10 +10,8 @@
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Order(int id, int customerId, string customerName)
+        public Order(int id, int customerId, string customerName, decimal total)
         {
-            if (id <= 0)
-                throw new InvalidOperationException("Order Id cannot be lower than 1");
             if (customerId <= 0)
                 throw new InvalidOperationException("Customer Id cannot be lower than 1");
             if (string.IsNullOrEmpty(customerName))
@@ -22,6 +20,7 @@
             Id = id;
             CustomerId = customerId;
             CustomerName = customerName;
+            Total = total;
             Items = new List<Item>();
             Status = "Teste";
             CreatedAt = DateTime.Now;

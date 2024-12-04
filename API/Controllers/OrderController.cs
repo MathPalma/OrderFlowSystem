@@ -15,8 +15,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOrder([FromBody] OrderViewModel orderViewModel)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderViewModel orderViewModel)
         {
+            await _orderService.CreateOrder(orderViewModel);
             return Ok();
         }
     }
