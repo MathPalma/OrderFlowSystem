@@ -1,9 +1,16 @@
 using Worker;
+using Worker.Application.Consumers;
+using Worker.Config;
+using Worker.Infrastructure.RabbitMQ;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((hostContext, services) =>
     {
-        services.AddHostedService<Worker>();
+        services.Configure<RabbitMQConfig>(hostContext.Configuration.GetSection("RabbitMQ"));
+        services.AddSingleton<RabbitMQConnection>();
+        services.AddSingleton<RabbitMQQueueManager>();
+        services.AddSingleton<OrderConsumer>();
+        services.AddHostedService<OrderWorker>();
     })
     .Build();
 
