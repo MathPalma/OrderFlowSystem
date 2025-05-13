@@ -1,4 +1,8 @@
-﻿namespace API.Domain.Entities
+﻿using API.Domain.Enums;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace API.Domain.Entities
 {
     public class Order
     {
@@ -7,7 +11,8 @@
         public string CustomerName { get; set; }
         public List<Item> Items { get; set; }
         public decimal Total { get; set; }
-        public string Status { get; set; }
+        [Column(TypeName = "tinyint")]
+        public OrderStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public Order(int id, int customerId, string customerName, decimal total)
@@ -22,7 +27,7 @@
             CustomerName = customerName;
             Total = total;
             Items = new List<Item>();
-            Status = "Teste";
+            Status = OrderStatus.New;
             CreatedAt = DateTime.Now;
         }
 
@@ -37,7 +42,16 @@
             if (item.UnitPrice <= 0)
                 throw new InvalidOperationException("The item price must be greather than zero");
 
+            Total += (item.Amount * item.UnitPrice);
             Items.Add(item);
+        }
+
+        public void Cancel()
+        {
+            if (Status == OrderStatus.Shipped || Status == OrderStatus.Delivered || Status == OrderStatus.Canceled)
+                throw new InvalidOperationException("Order cannot be canceled at this stage.");
+
+            Status = OrderStatus.Canceled;
         }
     }
 }

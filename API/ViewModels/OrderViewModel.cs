@@ -1,4 +1,6 @@
-﻿namespace API.ViewModels
+﻿using API.Domain.Enums;
+
+namespace API.ViewModels
 {
     public class OrderViewModel
     {
@@ -7,6 +9,6 @@
         public string CustomerName { get; set; }
         public List<OrderItemViewModel> Itens { get; set; }
         public decimal Total { get; set; }
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
     }
 }
