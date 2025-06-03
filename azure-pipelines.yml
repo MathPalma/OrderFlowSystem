@@ -57,6 +57,8 @@ steps:
     artifactName: 'drop'
     publishLocation: 'Container'
 
+- download: current
+  artifact: drop
 - task: AzureWebApp@1
   displayName: 'Deploy no Azure App Service'
   inputs:
