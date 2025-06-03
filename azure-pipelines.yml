@@ -57,12 +57,10 @@ steps:
     artifactName: 'drop'
     publishLocation: 'Container'
 
-- download: current
-  artifact: drop
 - task: AzureWebApp@1
   displayName: 'Deploy no Azure App Service'
   inputs:
     azureSubscription: 'azure-connection'  
     appType: 'webApp'
-    appName: 'order-flow'           
-    package: '$(System.ArtifactsDirectory)/drop/**/*.zip'
+    appName: 'order-flow'                 
+    package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
