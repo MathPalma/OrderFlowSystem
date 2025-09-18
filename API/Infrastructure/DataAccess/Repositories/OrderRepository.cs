@@ -1,10 +1,10 @@
-﻿using API.DataAccess.DbContexts;
-using API.Domain.Entities;
+﻿using API.Domain.Entities;
 using API.Domain.Repositories;
+using API.Infrastructure.DataAccess.DbContexts;
 using API.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.DataAccess.Repositories
+namespace API.Infrastructure.DataAccess.Repositories
 {
     public class OrderRepository : IOrderRepository
     {

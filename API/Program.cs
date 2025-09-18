@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("OrderProcessingDb"));
 builder.Services.AddRepositories();
+builder.Services.AddRabbitMQ();
 builder.Services.AddServices();
 
 //Add Swagger

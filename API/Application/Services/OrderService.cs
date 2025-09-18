@@ -10,9 +10,11 @@ namespace API.Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository) 
+        private readonly IRabbitMQProducer _rabbitMQProducer;
+        public OrderService(IOrderRepository orderRepository, IRabbitMQProducer rabbitMQProducer) 
         {
             _orderRepository = orderRepository;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         public async Task<Result> GetOrders(OrderFilterViewModel filters)
@@ -59,6 +61,8 @@ namespace API.Application.Services
                 });
 
                 await _orderRepository.CreateOrder(order);
+
+                _rabbitMQProducer.PublishMessage(order, "order-processing-queue");
 
                 return Result.Success(HttpStatusCode.Created);
             }

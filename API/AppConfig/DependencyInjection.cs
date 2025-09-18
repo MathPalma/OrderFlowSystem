@@ -1,8 +1,9 @@
 ﻿using API.Application.Interfaces;
 using API.Application.Services;
-using API.DataAccess.DbContexts;
-using API.DataAccess.Repositories;
 using API.Domain.Repositories;
+using API.Infrastructure.DataAccess.DbContexts;
+using API.Infrastructure.DataAccess.Repositories;
+using API.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.AppConfig
@@ -27,6 +28,13 @@ namespace API.AppConfig
         {
             services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
+
+            return services;
+        }
+
+        public static IServiceCollection AddRabbitMQ(this IServiceCollection services)
+        {
+            services.AddSingleton<IRabbitMQProducer, RabbitMQProducer>();
 
             return services;
         }
