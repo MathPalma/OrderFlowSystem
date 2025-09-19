@@ -1,8 +1,7 @@
-﻿using API.Domain.Enums;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Core.Domain.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace API.Domain.Entities
+namespace Core.Domain.Entities
 {
     public class Order
     {
@@ -42,7 +41,7 @@ namespace API.Domain.Entities
             if (item.UnitPrice <= 0)
                 throw new InvalidOperationException("The item price must be greather than zero");
 
-            Total += (item.Amount * item.UnitPrice);
+            Total += item.Amount * item.UnitPrice;
             Items.Add(item);
         }
 

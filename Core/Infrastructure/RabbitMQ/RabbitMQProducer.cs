@@ -1,9 +1,9 @@
-﻿using API.Application.Interfaces;
+﻿using Core.Domain.Interfaces;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
 
-namespace API.Infrastructure.RabbitMQ
+namespace Core.Infrastructure.RabbitMQ
 {
     public class RabbitMQProducer : IRabbitMQProducer
     {

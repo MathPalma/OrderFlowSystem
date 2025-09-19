@@ -1,4 +1,4 @@
-﻿namespace API.Domain.Entities
+﻿namespace Core.Domain.Entities
 {
     public class Item
     {

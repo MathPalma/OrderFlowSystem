@@ -1,10 +1,10 @@
-﻿using API.Domain.Entities;
-using API.Domain.Repositories;
-using API.Infrastructure.DataAccess.DbContexts;
-using API.ViewModels;
+﻿using Core.Domain.Entities;
+using Core.Domain.Models;
+using Core.Domain.Repositories;
+using Core.Infrastructure.DataAccess.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Infrastructure.DataAccess.Repositories
+namespace Core.Infrastructure.DataAccess.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
@@ -22,7 +22,7 @@ namespace API.Infrastructure.DataAccess.Repositories
                 .FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task<List<Order>> GetOrdersByFilters(OrderFilterViewModel filters)
+        public async Task<List<Order>> GetOrdersByFilters(OrderFilter filters)
         {
             var query = _context.Orders
                 .Include(o => o.Items)

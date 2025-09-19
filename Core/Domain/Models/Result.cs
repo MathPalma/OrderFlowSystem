@@ -1,6 +1,6 @@
 ﻿using System.Net;
 
-namespace API.Domain.Models
+namespace Core.Domain.Models
 {
     public class Result
     {

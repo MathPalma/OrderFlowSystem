@@ -1,6 +1,8 @@
-﻿using API.Application.Interfaces;
-using API.Domain.Models;
+﻿using API.Application.Mappers;
 using API.ViewModels;
+using Core.Domain.Entities;
+using Core.Domain.Interfaces;
+using Core.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,7 +21,8 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetOrders([FromQuery] OrderFilterViewModel filter)
         {
-            var result = await _orderService.GetOrders(filter);
+            OrderFilter filterDomainModel = filter.ToDomainModel();
+            var result = await _orderService.GetOrders(filterDomainModel);
 
             if (!result.IsSuccess)
                 return StatusCode(500, result.Message);
@@ -31,7 +34,8 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder([FromBody] OrderViewModel orderViewModel)
         {
-            Result result = await _orderService.CreateOrder(orderViewModel);
+            Order order = orderViewModel.ToDomainModel();
+            Result result = await _orderService.CreateOrder(order);
 
             if (!result.IsSuccess)
                 return result.StatusCode switch

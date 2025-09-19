@@ -1,4 +1,4 @@
-﻿namespace API.Domain.Enums
+﻿namespace Core.Domain.Enums
 {
     public enum OrderStatus
     {

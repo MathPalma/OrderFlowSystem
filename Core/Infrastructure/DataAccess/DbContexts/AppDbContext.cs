@@ -1,7 +1,7 @@
-﻿using API.Domain.Entities;
+﻿using Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Infrastructure.DataAccess.DbContexts
+namespace Core.Infrastructure.DataAccess.DbContexts
 {
     public class AppDbContext : DbContext
     {

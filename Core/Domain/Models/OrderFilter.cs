@@ -1,8 +1,8 @@
 ﻿using Core.Domain.Enums;
 
-namespace API.ViewModels
+namespace Core.Domain.Models
 {
-    public class OrderFilterViewModel
+    public class OrderFilter
     {
         public int? CustomerId { get; set; }
         public OrderStatus? Status { get; set; }

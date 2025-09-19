@@ -18,7 +18,7 @@ namespace Worker
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _consumer.Consume("OrderQueue");
+                _consumer.Consume("order-processing-queue");
                 await Task.Delay(1000, stoppingToken);
             }
         }

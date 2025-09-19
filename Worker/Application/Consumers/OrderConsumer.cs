@@ -1,6 +1,8 @@
-﻿using RabbitMQ.Client;
+﻿using Core.Domain.Entities;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
+using System.Text.Json;
 using Worker.Infrastructure.RabbitMQ;
 
 namespace Worker.Application.Consumers
@@ -29,6 +31,16 @@ namespace Worker.Application.Consumers
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine($"mensagem recebida: {message}");
+
+                var order = JsonSerializer.Deserialize<Order>(message);
+
+                if (order == null)
+                {
+                    channel.BasicNack(ea.DeliveryTag, multiple: false, requeue: false);
+                    Console.WriteLine($"[OrderWorker] Erro de desserialização. Mensagem rejeitada.");
+                    return;
+                }
+
 
                 channel.BasicAck(ea.DeliveryTag, false);
             };

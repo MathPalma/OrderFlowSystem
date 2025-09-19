@@ -1,9 +1,9 @@
-﻿using API.Application.Interfaces;
-using API.Application.Services;
-using API.Domain.Repositories;
-using API.Infrastructure.DataAccess.DbContexts;
-using API.Infrastructure.DataAccess.Repositories;
-using API.Infrastructure.RabbitMQ;
+﻿using API.Application.Services;
+using Core.Domain.Interfaces;
+using Core.Domain.Repositories;
+using Core.Infrastructure.DataAccess.DbContexts;
+using Core.Infrastructure.DataAccess.Repositories;
+using Core.Infrastructure.RabbitMQ;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.AppConfig

@@ -1,8 +1,8 @@
-﻿using API.Application.Interfaces;
-using API.Domain.Entities;
-using API.Domain.Models;
-using API.Domain.Repositories;
-using API.ViewModels;
+﻿using API.ViewModels;
+using Core.Domain.Entities;
+using Core.Domain.Interfaces;
+using Core.Domain.Models;
+using Core.Domain.Repositories;
 using System.Net;
 
 namespace API.Application.Services
@@ -17,7 +17,7 @@ namespace API.Application.Services
             _rabbitMQProducer = rabbitMQProducer;
         }
 
-        public async Task<Result> GetOrders(OrderFilterViewModel filters)
+        public async Task<Result> GetOrders(OrderFilter filters)
         {
             try
             {
@@ -46,19 +46,11 @@ namespace API.Application.Services
             }
         }
 
-        public async Task<Result> CreateOrder(OrderViewModel orderViewModel)
+        public async Task<Result> CreateOrder(Order order)
         {
             try
             {
                 //validate if the customer exists
-
-                Order order = new(0, orderViewModel.CustomerId, orderViewModel.CustomerName, orderViewModel.Total);
-
-                orderViewModel.Itens.ForEach(i =>
-                {
-                    Item item = new(i.Name, i.UnitPrice, i.Amount);
-                    order.AddItem(item);
-                });
 
                 await _orderRepository.CreateOrder(order);
 

@@ -1,4 +1,4 @@
-﻿namespace API.Application.Interfaces
+﻿namespace Core.Domain.Interfaces
 {
     public interface IRabbitMQProducer
     {
