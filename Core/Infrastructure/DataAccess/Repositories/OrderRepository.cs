@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Entities;
+using Core.Domain.Enums;
 using Core.Domain.Models;
 using Core.Domain.Repositories;
 using Core.Infrastructure.DataAccess.DbContexts;
@@ -61,6 +62,16 @@ namespace Core.Infrastructure.DataAccess.Repositories
         public async Task UpdateOrder(Order order)
         {
             _context.Orders.Update(order);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrderStatus(int orderId, OrderStatus status)
+        {
+            var orderToUpdate = new Order { Id = orderId, Status = status };
+
+            _context.Orders.Attach(orderToUpdate);
+            _context.Entry(orderToUpdate).Property(o => o.Status).IsModified = true;
+
             await _context.SaveChangesAsync();
         }
     }

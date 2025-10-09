@@ -14,6 +14,8 @@ namespace Core.Domain.Entities
         public OrderStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public Order() { }
+
         public Order(int id, int customerId, string customerName, decimal total)
         {
             if (customerId <= 0)

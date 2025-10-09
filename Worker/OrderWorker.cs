@@ -5,22 +5,26 @@ namespace Worker
     public class OrderWorker : BackgroundService
     {
         private readonly ILogger<OrderWorker> _logger;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly OrderConsumer _consumer;
 
-        public OrderWorker(ILogger<OrderWorker> logger, OrderConsumer orderConsumer)
+        public OrderWorker(ILogger<OrderWorker> logger, IServiceScopeFactory scopeFactory)
         {
             _logger = logger;
-            _consumer = orderConsumer;
+            _scopeFactory = scopeFactory;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _consumer.Consume("order-processing-queue");
-                await Task.Delay(1000, stoppingToken);
-            }
+            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+
+           
+            using var scope = _scopeFactory.CreateScope();
+            var consumer = scope.ServiceProvider.GetRequiredService<OrderConsumer>();
+
+            consumer.Consume("order-processing-queue");
+
+            await Task.Delay(Timeout.Infinite, stoppingToken);
         }
     }
 }
