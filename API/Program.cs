@@ -3,6 +3,11 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
+
 // Add services to the container.
 
 builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("OrderProcessingDb"));
@@ -26,9 +31,14 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+var logger = loggerFactory.CreateLogger("StartupLogger");
+
+logger.LogWarning("Database connection string: {ConnectionString}", builder.Configuration.GetConnectionString("OrderProcessingDb"));
+
 //Configure swagger
 
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.

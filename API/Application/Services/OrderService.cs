@@ -4,15 +4,18 @@ using Core.Domain.Interfaces;
 using Core.Domain.Models;
 using Core.Domain.Repositories;
 using System.Net;
+using System.Text.Json;
 
 namespace API.Application.Services
 {
     public class OrderService : IOrderService
     {
+        private readonly ILogger<OrderService> _logger;
         private readonly IOrderRepository _orderRepository;
         private readonly IRabbitMQProducer _rabbitMQProducer;
-        public OrderService(IOrderRepository orderRepository, IRabbitMQProducer rabbitMQProducer) 
+        public OrderService(ILogger<OrderService> logger, IOrderRepository orderRepository, IRabbitMQProducer rabbitMQProducer) 
         {
+            _logger = logger;
             _orderRepository = orderRepository;
             _rabbitMQProducer = rabbitMQProducer;
         }
@@ -40,8 +43,9 @@ namespace API.Application.Services
 
                 return Result.Success(HttpStatusCode.OK, response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "An unexpected error occurred getting the orders. OrderFilters: {Filters}", JsonSerializer.Serialize(filters));
                 return Result.Failure(HttpStatusCode.InternalServerError, "An unexpected error occurred getting the orders. Please, contact the support.");
             }
         }
@@ -62,8 +66,9 @@ namespace API.Application.Services
             {
                 return Result.Failure(HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "An unexpected error occurred creating the order. Order: {Order}", JsonSerializer.Serialize(order));
                 return Result.Failure(HttpStatusCode.InternalServerError, "An unexpected error occurred creating the order. Please, contact the support.");
             }
         }
@@ -85,8 +90,9 @@ namespace API.Application.Services
             {
                 return Result.Failure(HttpStatusCode.BadRequest, ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "An unexpected error occurred cancelling the order. OrderId: {OrderId}", orderId);
                 return Result.Failure(HttpStatusCode.InternalServerError,"An unexpected error occurred cancelling the order. Contact the support!");
             }
         }
