@@ -1,12 +1,17 @@
 using API.AppConfig;
 using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
-builder.Logging.SetMinimumLevel(LogLevel.Information);
+builder.Host.UseNLog();
+
 
 // Add services to the container.
 
@@ -32,9 +37,9 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
-var logger = loggerFactory.CreateLogger("StartupLogger");
 
-logger.LogWarning("Database connection string: {ConnectionString}", builder.Configuration.GetConnectionString("OrderProcessingDb"));
+logger.Info("Application started.");
+logger.Warn("Database connection string: {ConnectionString}", builder.Configuration.GetConnectionString("OrderProcessingDb"));
 
 //Configure swagger
 
