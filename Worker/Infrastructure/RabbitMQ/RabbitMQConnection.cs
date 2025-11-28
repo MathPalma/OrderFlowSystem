@@ -12,7 +12,7 @@ namespace Worker.Infrastructure.RabbitMQ
         public RabbitMQConnection(IOptions<RabbitMQConfig> config)
         {
             _config = config.Value;
-            _connectionFactory = new ConnectionFactory { HostName = _config.HostName };
+            _connectionFactory = new ConnectionFactory { Uri = new Uri(_config.ConnectionString) };
         }
 
         public IConnection CreateConnection()

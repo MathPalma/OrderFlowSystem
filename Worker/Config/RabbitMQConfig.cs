@@ -2,7 +2,7 @@
 {
     public class RabbitMQConfig
     {
-        public string HostName { get; set; } = "localhost";
+        public string ConnectionString { get; set; }
         public string QueueName { get; set; } = "orderQueue";
     }
 }

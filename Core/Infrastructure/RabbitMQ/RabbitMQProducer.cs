@@ -1,4 +1,5 @@
 ﻿using Core.Domain.Interfaces;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using System.Text;
 using System.Text.Json;
@@ -7,9 +8,14 @@ namespace Core.Infrastructure.RabbitMQ
 {
     public class RabbitMQProducer : IRabbitMQProducer
     {
+        private readonly IConfiguration _configuration;
+        public RabbitMQProducer(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public void PublishMessage<T>(T message, string queueName)
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" }; //maybe use configuration
+            var factory = new ConnectionFactory() { Uri = new Uri(_configuration["RabbitMQ:ConnectionString"]) };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
